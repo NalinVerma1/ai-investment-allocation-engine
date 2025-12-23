@@ -23,3 +23,13 @@ def read_df(tab_name):
     sheet = open_sheet().worksheet(tab_name)
     data = sheet.get_all_records()
     return pd.DataFrame(data)
+
+def write_df(tab_name, df):
+    sheet = open_sheet().worksheet(tab_name)
+
+    sheet.clear
+
+    sheet.append_row(df.columns.tolist())
+
+    for _, row in df.iterrows():
+        sheet.append_row(row.tolist())
