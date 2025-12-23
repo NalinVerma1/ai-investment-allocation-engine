@@ -1,10 +1,10 @@
 import itertools
 
 def generate_weights(n, step):
-    value = []
+    values = []
     i = 0 
     while i <= 1 :
-        value.append(round(i, 2))
+        values.append(round(i, 2))
         i += step
     
     all_combi = itertools.product(values, repeat=n)
