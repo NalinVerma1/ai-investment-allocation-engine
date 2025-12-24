@@ -100,5 +100,7 @@ This project is for educational purposes only and does not constitute financial 
 
 ### Author
 **Nalin Verma**
+
 Management Engineering, University of Waterloo
+
 *Focus: Quantitative Finance, AI Systems, Product Design*
