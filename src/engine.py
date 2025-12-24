@@ -1,6 +1,6 @@
-from generator import generate_weights
-from constraints import check_weight_limits, check_risk_limit
-from scoring import worst_case_return
+from .generator import generate_weights
+from .constraints import check_weight_limits, check_risk_limit
+from .scoring import worst_case_return
 
 
 def get_feasible_portfolios(n_assets, step, min_w, max_w, risk_scores, max_risk):

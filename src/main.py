@@ -1,33 +1,39 @@
-from engine import get_feasible_portfolios, find_best_portfolio
+from .sheets import read_assets, read_constraints, write_results , write_ai_explanation
+from .scenario_builder import build_scenarios
+from .portfolio import find_best_portfolio
+from .ai_explanation import generate_ai_explanation
+from .ai_explanation import generate_ai_explanation
 
-n = 3
-step = 0.5
 
-min_w = [0, 0, 0]
-max_w = [1, 1, 1]
+def main():
+    assets, risks, returns_5y = read_assets()
+    capital, min_w, max_w, max_risk = read_constraints()
 
-risk_scores = [8, 5, 2]
-max_risk = 6
+    bull, base, bear = build_scenarios(returns_5y)
 
-bull_returns = [0.20, 0.12, 0.05]
-neutral_returns = [0.10, 0.07, 0.04]
-bear_returns = [-0.25, -0.10, -0.02]
+    best_weights, score = find_best_portfolio(assets, risks, (bull, base, bear), min_w, max_w, max_risk)
+    explanation = generate_ai_explanation(assets, best_weights, risks, returns_5y, score)
+    write_ai_explanation(explanation)
+    write_results(assets, best_weights, capital, score)
 
-feasible = get_feasible_portfolios(n, step, min_w, max_w, risk_scores, max_risk)
+    if best_weights is None:
+        print("No feasible portfolio found with current constraints.")
+        return
 
-print("FEASIBLE PORTFOLIOS")
-for f in feasible:
-    print(f)
+    print("Capital:", capital)
 
-result = find_best_portfolio( feasible, bull_returns, neutral_returns, bear_returns)
+    print("\nBest portfolio:")
+    for i in range(len(assets)):
+        print(assets[i], ":", round(best_weights[i] * 100, 1), "%")
 
-best_weights = result[0]
-best_score = result[1]
+    print("\nDollar allocation:")
+    for i in range(len(assets)):
+        dollars = best_weights[i] * capital
+        print(assets[i], ":", round(dollars, 2))
 
-print("")
-print("BEST PORTFOLIO")
-print(best_weights)
+    print("Worst-case return:", round(score * 100, 2), "%")
+    print("\nAI Explanation:")
+    print(explanation)
 
-print("")
-print("WORST CASE RETURN")
-print(best_score)
+if __name__ == "__main__":
+    main()
