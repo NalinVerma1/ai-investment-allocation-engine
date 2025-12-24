@@ -65,6 +65,8 @@ src/
 ├── portfolio.py          # Selection logic for best-performing portfolios
 └── ai_explanation.py     # LLM prompt engineering and generation
 
+```
+
 ## System Workflow
 
 * **Data Ingestion:** Read market data and user constraints from Google Sheets.
