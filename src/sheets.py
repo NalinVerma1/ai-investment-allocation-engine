@@ -91,8 +91,10 @@ def write_results(assets, weights, capital, score):
             ])
     sheet.append_row(["", "", ""])
 
+    worst_case = round(score * 100, 2)
+
     sheet.append_row([
-        "Worst-case return (%)",])
+        "Worst-case return (%)", worst_case, "" ])
 
 def write_ai_explanation(explanation_text):
     sheet = open_sheet().worksheet("AI_Explanation")
